@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="bfos_sync_content.server_loader.class">BFOS\SyncContentBundle\Loader\ServerLoader</parameter>
+        <parameter key="bfos_sync_content.manager.class">BFOS\SyncContentBundle\Manager</parameter>
+    </parameters>
+
+    <services>
+        <service id="bfos_sync_content.server_loader" class="%bfos_sync_content.server_loader.class%">
+        </service>
+        <service id="bfos_sync_content.manager" class="%bfos_sync_content.manager.class%">
+            <argument type="service" id="bfos_sync_content.server_loader" />
+        </service>
+    </services>
+</container>
