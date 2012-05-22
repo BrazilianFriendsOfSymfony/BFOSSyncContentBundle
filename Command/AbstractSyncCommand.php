@@ -51,16 +51,17 @@ abstract class AbstractSyncCommand extends ContainerAwareCommand
                 $output->writeln('Synchronizing path: ' . $content_path);
 
                 $local_content_path = "$pathLocal/$content_path";
-                $remote_content_path = dirname("$pathRemote/$content_path");
+                $remote_content_path = "$pathRemote/$content_path";
+//                $remote_content_path = is_dir($remote_content_path)?$remote_content_path:dirname($remote_content_path);
 
                 if(file_exists($local_content_path)){
 
                     if($direction=='to'){
                         $from = $local_content_path;
-                        $to = $remote_content_path;
+                        $to = dirname($remote_content_path);
                     } else { // from
                         $from = $remote_content_path;
-                        $to = $local_content_path;
+                        $to = dirname($local_content_path);
                     }
 
                     $cmd = "rsync -e 'ssh -p $port' -azC --no-o --no-t --no-p --force --delete --progress " . escapeshellarg($from) . " " . escapeshellarg($to);
