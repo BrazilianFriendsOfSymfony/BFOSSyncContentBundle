@@ -43,11 +43,11 @@ abstract class AbstractSyncCommand extends ContainerAwareCommand
         $port = $server->getPort();
 
         $options = $manager->getOptions();
-        if(isset($options['content'])){
+        if(isset($options['sync_content']['content'])){
 
             $output->writeln('Synchronizing content...');
             $results = array();
-            foreach ($options['content'] as $content_path) {
+            foreach ($options['sync_content']['content'] as $content_path) {
                 $output->writeln('Synchronizing path: ' . $content_path);
 
                 $local_content_path = "$pathLocal/$content_path";

@@ -1,7 +1,7 @@
 The BFOSSyncContentBundle
 =========================
 
-This Symfony 2 bundle helps you synchronize your content with your remote server.
+This Symfony 2 bundle helps you synchronize your content with your remote server. It also deploys your application.
 
 This bundle was inspired by sfSyncContentPlugin by Punk'Ave and MadalynnPlumBundle.
 
@@ -44,9 +44,21 @@ And this to your app/config/config_dev.yml
 
     bfos_sync_content:
         options: # Global options
-            rsync_exclude: "%kernel.root_dir%/config/rsync_exclude.txt"
-            content:
-                - "web/uploads"
+            deployment:
+                rsync_exclude: "%kernel.root_dir%/config/rsync_exclude.txt"
+                pre_local_commands:
+                    - 'php app/console assetic:dump'
+                post_local_commands:
+                    - 'rm -rf web/js web/css'
+                #pre_remote_commands:
+                #    - './c'
+                post_remote_commands:
+                    - 'php app/console cache:clear --env=prod --no-debug --no-warmup'
+                    - 'php app/console doctrine:schema:update --force --env=prod'
+                    - 'php app/console assets:install web --symlink'
+            sync_content:
+                content:
+                    - "web/uploads"
         servers: "%kernel.root_dir%/config/deployment_sync_content.yml"
 
 Example of deployment_sync_content.yml :
@@ -102,5 +114,7 @@ How to use:
 php app/console bfos:sync-content:to dev@staging
 
 php app/console bfos:sync-content:to prod@production
+
+php app/console bfos:deploy staging
 
 
