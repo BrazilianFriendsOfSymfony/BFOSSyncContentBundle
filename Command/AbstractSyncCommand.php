@@ -26,7 +26,7 @@ abstract class AbstractSyncCommand extends ContainerAwareCommand
     protected function checkRemoveEnvParam($remoteenv){
         if (!preg_match('/^(.*)\@(.*)?$/', $remoteenv, $matches))
         {
-            throw new sfException("remoteenv must be of the form environment@site, example: dev@staging or prod@production; the site must be defined in app/config/deployment_sync_content.yml");
+            throw new \Exception("remoteenv must be of the form environment@site, example: dev@staging or prod@production; the site must be defined in app/config/deployment_sync_content.yml");
         }
         $envRemote = $matches[1];
         $server = $matches[2];

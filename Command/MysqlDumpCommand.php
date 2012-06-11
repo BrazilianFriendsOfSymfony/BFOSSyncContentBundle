@@ -50,7 +50,7 @@ class MysqlDumpCommand extends ContainerAwareCommand
 
         if ($result != 0)
         {
-            throw new sfException("mysqldump failed");
+            throw new \Exception("mysqldump failed");
         }
 
 
