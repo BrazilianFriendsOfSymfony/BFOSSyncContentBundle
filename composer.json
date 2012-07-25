@@ -31,5 +31,5 @@
     "autoload": {
         "psr-0": { "BFOS\\SyncContentBundle": "" }
     },
-    "target-dir": "FOS/SyncContentBundle"
+    "target-dir": "BFOS/SyncContentBundle"
 }
