@@ -27,7 +27,7 @@ class SyncFromCommand extends AbstractSyncCommand
             ->setName('bfos:sync-content:from')
             ->setDescription('Synchronize content FROM another server')
             ->addArgument('remoteenv', InputArgument::REQUIRED, 'The environment name and server name concatenated by @ .')
-//            ->addOption('env', null, InputOption::VALUE_OPTIONAL, 'The local environment name to be used.', 'dev')
+            ->addOption('only-database', null, InputOption::VALUE_OPTIONAL, 'Indicates that only the database content should be synchronized.', false)
             ->setHelp(<<<EOF
 The <info>bosf:sync-content:from</info> command synchronize the content from a remote server to your computer:
 
@@ -91,7 +91,9 @@ EOF
 
         // END - mysql
 
-        $this->synchronize_content('from', $server, $manager, $output);
+        if(!$input->getOption('only-database')){
+            $this->synchronize_content('from', $server, $manager, $output);
+        }
 
 
 
