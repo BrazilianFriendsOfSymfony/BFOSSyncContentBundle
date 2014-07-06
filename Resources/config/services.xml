@@ -6,13 +6,13 @@
 
     <parameters>
         <parameter key="bfos_sync_content.server_loader.class">BFOS\SyncContentBundle\Loader\ServerLoader</parameter>
-        <parameter key="bfos_sync_content.manager.class">BFOS\SyncContentBundle\Manager</parameter>
+        <parameter key="bfos_sync_content.server_register.class">BFOS\SyncContentBundle\Server\ServerRegister</parameter>
     </parameters>
 
     <services>
         <service id="bfos_sync_content.server_loader" class="%bfos_sync_content.server_loader.class%">
         </service>
-        <service id="bfos_sync_content.manager" class="%bfos_sync_content.manager.class%">
+        <service id="bfos_sync_content.server_register" class="%bfos_sync_content.server_register.class%">
             <argument type="service" id="bfos_sync_content.server_loader" />
         </service>
     </services>

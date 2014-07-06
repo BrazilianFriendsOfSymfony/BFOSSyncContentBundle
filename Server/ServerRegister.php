@@ -1,11 +1,11 @@
 <?php
 
-namespace BFOS\SyncContentBundle;
+namespace BFOS\SyncContentBundle\Server;
 
 use BFOS\SyncContentBundle\Loader\LoaderInterface;
 use BFOS\SyncContentBundle\Server\Server;
 
-class Manager {
+class ServerRegister {
     /**
      * @var array
      */
@@ -46,7 +46,7 @@ class Manager {
      * @param string $name
      * @param Server $server
      *
-     * @return Manager
+     * @return ServerRegister
      */
     public function addServer($name, $server)
     {
@@ -68,7 +68,7 @@ class Manager {
      *
      * @param array $servers
      *
-     * @return Manager
+     * @return ServerRegister
      */
     public function setServers(array $servers)
     {
@@ -84,7 +84,7 @@ class Manager {
      *
      * @param string $name
      *
-     * @return Manager
+     * @return ServerRegister
      */
     public function removeServer($name)
     {
