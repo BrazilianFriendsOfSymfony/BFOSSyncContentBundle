@@ -11,7 +11,7 @@
 
 namespace BFOS\SyncContentBundle\Command;
 
-use BFOS\SyncContentBundle\Server\ServerRegister;
+use BFOS\SyncContentBundle\Server\ServerRegisterInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -58,7 +58,7 @@ EOF
         $servername = $input->getArgument('server');
 
         /**
-         * @var ServerRegister $register
+         * @var ServerRegisterInterface $register
          */
         $register = $this->getContainer()->get('bfos_sync_content.server_register');
 
@@ -72,14 +72,14 @@ EOF
     }
 
 
-    protected function synchronize_content(Server $server, ServerRegister $register, OutputInterface $output){
+    protected function synchronize_content(Server $server, ServerRegisterInterface $register, OutputInterface $output){
 
         // Synchronize files
 
         $pathRemote = $server->getPath();
         $port = $server->getPort();
 
-        $options = $register->getGlobalOptions();
+        $options = $register->getMergedOptions($server);
 
         $output->writeln('Deploying app...');
         $results = array();
@@ -106,7 +106,7 @@ EOF
 //        $remote_content_path = rtrim($pathRemote, '/') . '/';
         $remote_content_path = $pathRemote;
 
-        if(file_exists($local_content_path)){
+        if (file_exists($local_content_path)) {
 
             $from = $local_content_path;
             $to = $remote_content_path;

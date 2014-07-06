@@ -3,6 +3,7 @@
 namespace BFOS\SyncContentBundle\Command;
 
 use BFOS\SyncContentBundle\Server\ServerInterface;
+use BFOS\SyncContentBundle\Server\ServerRegisterInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -31,12 +32,17 @@ class ShowServerCommand extends ContainerAwareCommand
             $servers = array($server => $manager->getServer($server));
         }
 
+        /**
+         * @var ServerRegisterInterface $register
+         */
+        $register = $this->getContainer()->get('bfos_sync_content.server_register');
+
         foreach ($servers as $name => $server) {
-            $this->showServer($name, $server, $output);
+            $this->showServer($name, $server, $register, $output);
         }
     }
 
-    protected function showServer($name, ServerInterface $server, OutputInterface $output)
+    protected function showServer($name, ServerInterface $server, ServerRegisterInterface $register, OutputInterface $output)
     {
         $password = '';
         if (null !== $server->getPassword()) {
@@ -50,7 +56,7 @@ class ShowServerCommand extends ContainerAwareCommand
         $output->writeln(sprintf('    > <comment>password</comment>: %s', $password));
         $output->writeln(sprintf('    > <comment>port</comment>:     %s', $server->getPort()));
 
-        $options = $server->getOptions();
+        $options = $register->getMergedOptions($server);
         if (0 !== count($options)) {
             $output->writeln('    > <comment>options</comment>:');
             foreach ($options as $key => $value) {

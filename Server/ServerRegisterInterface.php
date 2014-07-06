@@ -1,6 +1,8 @@
 <?php
 namespace BFOS\SyncContentBundle\Server;
 
+use Doctrine\Common\Annotations\Annotation\Attribute;
+
 interface ServerRegisterInterface
 {
     public function loadServers($filename);
@@ -68,4 +70,12 @@ interface ServerRegisterInterface
      * Returns options
      */
     public function getGlobalOptions();
+
+    /**
+     * Returns the server options merged with the global ones.
+     *
+     * @param ServerInterface $server
+     * @return array
+     */
+    public function getMergedOptions(ServerInterface $server);
 }

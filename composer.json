@@ -28,5 +28,10 @@
     "autoload": {
         "psr-0": { "BFOS\\SyncContentBundle": "" }
     },
-    "target-dir": "BFOS/SyncContentBundle"
+    "target-dir": "BFOS/SyncContentBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
 }

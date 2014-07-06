@@ -45,11 +45,11 @@ class ServerRegister implements ServerRegisterInterface
      * Add a server to the list
      *
      * @param string $name
-     * @param Server $server
+     * @param ServerInterface $server
      *
      * @return ServerRegister
      */
-    public function addServer($name, $server)
+    public function addServer($name, ServerInterface $server)
     {
         if (null === $server) {
             throw new \InvalidArgumentException('The server can not be null.');
@@ -144,4 +144,13 @@ class ServerRegister implements ServerRegisterInterface
         return $this->options;
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getMergedOptions(ServerInterface $server)
+    {
+        $global = $this->getGlobalOptions();
+        $local = $server->getOptions();
+        return array_merge($global, $local);
+    }
 }
