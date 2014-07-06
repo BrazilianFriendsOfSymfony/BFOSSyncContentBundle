@@ -53,23 +53,25 @@ EOF
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $remoteenv    = $input->getArgument('remoteenv');
-        $remoteenv = $this->checkRemoveEnvParam($remoteenv);
+        $remoteEnv    = $input->getArgument('remoteenv');
+        $remoteEnv = $this->checkRemoveEnvParam($remoteEnv);
 
-        $envRemote = $remoteenv['env'];
-        $servername = $remoteenv['server'];
+        $serverName = $remoteEnv['server'];
+        $remoteEnv = $remoteEnv['env'];
+
+        $localEnv = $input->getOption('env');
 
         /**
-         * @var \BFOS\SyncContentBundle\Manager $manager
+         * @var \BFOS\SyncContentBundle\Server\ServerRegisterInterface $register
          */
-        $manager = $this->getContainer()->get('bfos_sync_content.server_register');
+        $register = $this->getContainer()->get('bfos_sync_content.server_register');
 
-        $server = $manager->getServer($servername);
+        $server = $register->getServer($serverName);
 
         // Synchronize the Mysql database
 
-        $cmd_local = "php app/console bfos:sync-content:mysql-load";
-        $cmd_remote = sprintf("php app/console bfos:sync-content:mysql-dump");
+        $cmd_local = "php app/console bfos:sync-content:mysql-load --env=".$localEnv;
+        $cmd_remote = sprintf("php app/console bfos:sync-content:mysql-dump --env=".$remoteEnv);
 
 //        $cmd = sprintf("php app/console bfos:sync-content:mysql-dump | ssh -p %d %s@%s ", $server->getPort(), $server->getUser(), $server->getHost());
         $cmd = sprintf("ssh -p %d %s@%s ", $server->getPort(), $server->getUser(), $server->getHost());
@@ -92,7 +94,7 @@ EOF
         // END - mysql
 
         if(!$input->getOption('only-database')){
-            $this->synchronize_content('from', $server, $manager, $output);
+            $this->synchronize_content('from', $server, $register, $output);
         }
 
 

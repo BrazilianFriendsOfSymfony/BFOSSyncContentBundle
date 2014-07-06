@@ -23,7 +23,11 @@ use \BFOS\SyncContentBundle\Server\Server;
 abstract class AbstractSyncCommand extends ContainerAwareCommand
 {
 
-
+    /**
+     * @param $remoteenv
+     * @return array
+     * @throws \Exception
+     */
     protected function checkRemoveEnvParam($remoteenv) {
         if (!preg_match('/^(.*)\@(.*)?$/', $remoteenv, $matches))
         {
