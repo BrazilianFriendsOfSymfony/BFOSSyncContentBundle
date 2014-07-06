@@ -76,10 +76,10 @@ EOF
 
         // Synchronize files
 
-        $pathRemote = $server->getUser() . '@' . $server->getHost() . ':' . $server->getDir();
+        $pathRemote = $server->getPath();
         $port = $server->getPort();
 
-        $options = $register->getOptions();
+        $options = $register->getGlobalOptions();
 
         $output->writeln('Deploying app...');
         $results = array();

@@ -1,0 +1,71 @@
+<?php
+namespace BFOS\SyncContentBundle\Server;
+
+interface ServerRegisterInterface
+{
+    public function loadServers($filename);
+
+    /**
+     * Add a server to the list
+     *
+     * @param string $name
+     * @param ServerInterface $server
+     *
+     * @return ServerRegisterInterface
+     */
+    public function addServer($name, ServerInterface $server);
+
+    /**
+     * Add a list of servers
+     *
+     * @param array $servers
+     *
+     * @return ServerRegisterInterface
+     */
+    public function setServers(array $servers);
+
+    /**
+     * Remove a server
+     *
+     * @param string $name
+     *
+     * @return ServerRegisterInterface
+     */
+    public function removeServer($name);
+
+    /**
+     * Returns a server
+     *
+     * @param string $server The server name
+     *
+     * @return ServerInterface
+     */
+    public function getServer($server);
+
+    /**
+     * Returns servers
+     *
+     * @return array
+     */
+    public function getServers();
+
+    /**
+     * @param array $options
+     *
+     * @return ServerRegisterInterface
+     */
+    public function setGlobalOptions(array $options);
+
+    /**
+     * Add an option
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function addGlobalOption($key, $value);
+
+    /**
+     * Returns options
+     */
+    public function getGlobalOptions();
+}

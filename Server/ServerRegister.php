@@ -5,7 +5,8 @@ namespace BFOS\SyncContentBundle\Server;
 use BFOS\SyncContentBundle\Loader\LoaderInterface;
 use BFOS\SyncContentBundle\Server\Server;
 
-class ServerRegister {
+class ServerRegister implements ServerRegisterInterface
+{
     /**
      * @var array
      */
@@ -119,22 +120,7 @@ class ServerRegister {
         return $this->servers;
     }
 
-
-    /**
-     * Deploy to the server using the deployer
-     *
-     * @param string $server
-     * @param string $deployer
-     * @param array  $options
-     */
-    public function synchronize($server, $options = array())
-    {
-        $server   = $this->getServer($server);
-
-        return '';
-    }
-
-    public function setOptions(array $options)
+    public function setGlobalOptions(array $options)
     {
         $this->options = $options;
     }
@@ -145,7 +131,7 @@ class ServerRegister {
      * @param string $key
      * @param string $value
      */
-    public function addOption($key, $value)
+    public function addGlobalOption($key, $value)
     {
         $this->options[$key] = $value;
     }
@@ -153,7 +139,7 @@ class ServerRegister {
     /**
      * Returns options
      */
-    public function getOptions()
+    public function getGlobalOptions()
     {
         return $this->options;
     }

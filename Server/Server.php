@@ -110,4 +110,13 @@ class Server implements ServerInterface
     {
         return $this->options;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPath()
+    {
+        return $this->getUser() . '@' . $this->getHost() . ':' . $this->getDir();
+    }
+
 }

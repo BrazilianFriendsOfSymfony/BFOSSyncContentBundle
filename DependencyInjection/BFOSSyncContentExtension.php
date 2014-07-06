@@ -28,7 +28,7 @@ class BFOSSyncContentExtension extends Extension
         $manager = $container->getDefinition('bfos_sync_content.server_register');
 
         // Options
-        $manager->addMethodCall('setOptions', array($config['options']));
+        $manager->addMethodCall('setGlobalOptions', array($config['options']));
 
         // Servers
         $manager->addMethodCall('loadServers', array($config['servers']));

@@ -1,23 +1,13 @@
 <?php
 
-/*
- * This file is part of the Madalynn package.
- *
- * (c) 2010-2011 Julien Brochet <mewt@madalynn.eu>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace BFOS\SyncContentBundle\Command;
 
+use BFOS\SyncContentBundle\Server\ServerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-
-use BFOS\SyncContentBundle\Server\Server;
 
 class ShowServerCommand extends ContainerAwareCommand
 {
@@ -46,7 +36,7 @@ class ShowServerCommand extends ContainerAwareCommand
         }
     }
 
-    protected function showServer($name, Server $server, OutputInterface $output)
+    protected function showServer($name, ServerInterface $server, OutputInterface $output)
     {
         $password = '';
         if (null !== $server->getPassword()) {
