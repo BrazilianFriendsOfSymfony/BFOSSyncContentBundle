@@ -11,6 +11,7 @@
 
 namespace BFOS\SyncContentBundle\Command;
 
+use BFOS\SyncContentBundle\Server\ServerRegisterInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,7 +24,7 @@ abstract class AbstractSyncCommand extends ContainerAwareCommand
 {
 
 
-    protected function checkRemoveEnvParam($remoteenv){
+    protected function checkRemoveEnvParam($remoteenv) {
         if (!preg_match('/^(.*)\@(.*)?$/', $remoteenv, $matches))
         {
             throw new \Exception("remoteenv must be of the form environment@site, example: dev@staging or prod@production; the site must be defined in app/config/deployment_sync_content.yml");
@@ -34,15 +35,15 @@ abstract class AbstractSyncCommand extends ContainerAwareCommand
     }
 
 
-    protected function synchronize_content($direction, Server $server, $manager, $output){
+    protected function synchronize_content($direction, Server $server, ServerRegisterInterface $register, $output){
 
         // Synchronize files
 
         $pathLocal = '.';
-        $pathRemote = $server->getUser() . '@' . $server->getHost() . ':' . $server->getDir();
+        $pathRemote = $server->getPath();
         $port = $server->getPort();
 
-        $options = $manager->getOptions();
+        $options = $register->getGlobalOptions();
         if(isset($options['sync_content']['content'])){
 
             $output->writeln('Synchronizing content...');

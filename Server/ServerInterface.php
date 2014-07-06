@@ -15,31 +15,50 @@ interface ServerInterface
 {
     /**
      * Return the connection port
+     *
+     * @return string
      */
-    function getPort();
+    public function getPort();
 
     /**
      * Returns the host
+     *
+     * @return string
      */
-    function getHost();
+    public function getHost();
 
     /**
      * Returns the directory
+     *
+     * @return string
      */
-    function getDir();
+    public function getDir();
 
     /**
      * Returns the user
+     *
+     * @return string
      */
-    function getUser();
+    public function getUser();
 
     /**
      * Returns the password
+     *
+     * @return string
      */
-    function getPassword();
+    public function getPassword();
 
     /**
      * Returns options
+     *
+     * @return string
      */
-    function getOptions();
+    public function getOptions();
+
+    /**
+     * Returns the path as in SCP
+     *
+     * @return string
+     */
+    public function getPath();
 }

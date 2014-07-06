@@ -2,6 +2,7 @@
 
 namespace BFOS\SyncContentBundle\DependencyInjection;
 
+use BFOS\SyncContentBundle\Server\ServerRegisterInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -25,12 +26,13 @@ class BFOSSyncContentExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        $manager = $container->getDefinition('bfos_sync_content.server_register');
+        /** @var ServerRegisterInterface $register */
+        $register = $container->getDefinition('bfos_sync_content.server_register');
 
         // Options
-        $manager->addMethodCall('setOptions', array($config['options']));
+        $register->addMethodCall('setGlobalOptions', array($config['options']));
 
         // Servers
-        $manager->addMethodCall('loadServers', array($config['servers']));
+        $register->addMethodCall('loadServers', array($config['servers']));
     }
 }
