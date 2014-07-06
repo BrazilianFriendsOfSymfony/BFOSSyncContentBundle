@@ -11,6 +11,7 @@
 
 namespace BFOS\SyncContentBundle\Command;
 
+use BFOS\SyncContentBundle\Server\ServerRegister;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -57,16 +58,13 @@ EOF
         $servername = $input->getArgument('server');
 
         /**
-         * @var \BFOS\SyncContentBundle\Manager $manager
+         * @var ServerRegister $register
          */
-        $manager = $this->getContainer()->get('bfos_sync_content.manager');
+        $register = $this->getContainer()->get('bfos_sync_content.server_register');
 
-        $server = $manager->getServer($servername);
+        $server = $register->getServer($servername);
 
-
-        $this->synchronize_content($server, $manager, $output);
-
-
+        $this->synchronize_content($server, $register, $output);
 
         $output->writeln('Synchronization was successful.');
         return true;
@@ -74,15 +72,14 @@ EOF
     }
 
 
-    protected function synchronize_content(Server $server, $manager, OutputInterface $output){
+    protected function synchronize_content(Server $server, ServerRegister $register, OutputInterface $output){
 
         // Synchronize files
 
-        $pathLocal = '.';
         $pathRemote = $server->getUser() . '@' . $server->getHost() . ':' . $server->getDir();
         $port = $server->getPort();
 
-        $options = $manager->getOptions();
+        $options = $register->getOptions();
 
         $output->writeln('Deploying app...');
         $results = array();

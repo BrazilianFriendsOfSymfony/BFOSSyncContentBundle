@@ -32,7 +32,7 @@ class ShowServerCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $manager   = $this->getContainer()->get('bfos_sync_content.manager');
+        $manager   = $this->getContainer()->get('bfos_sync_content.server_register');
         $server = $input->getArgument('server');
 
         if (null === $server) {

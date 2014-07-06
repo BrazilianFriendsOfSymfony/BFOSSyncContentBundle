@@ -63,7 +63,7 @@ EOF
         /**
          * @var \BFOS\SyncContentBundle\Manager $manager
          */
-        $manager = $this->getContainer()->get('bfos_sync_content.manager');
+        $manager = $this->getContainer()->get('bfos_sync_content.server_register');
 
         $server = $manager->getServer($servername);
 

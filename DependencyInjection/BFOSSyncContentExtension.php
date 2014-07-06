@@ -25,7 +25,7 @@ class BFOSSyncContentExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        $manager = $container->getDefinition('bfos_sync_content.manager');
+        $manager = $container->getDefinition('bfos_sync_content.server_register');
 
         // Options
         $manager->addMethodCall('setOptions', array($config['options']));
