@@ -28,7 +28,14 @@ class ServerLoader implements LoaderInterface
             return null;
         }
 
-        $configs = Yaml::parse($filename);
+        if (is_string($filename)) {
+            $configs = Yaml::parse($filename);
+        } elseif (is_array($filename)) {
+            $configs = $filename;
+        } else {
+            throw new \InvalidArgumentException('Invalid server configuration, must be a filepath or array.');
+        }
+
         $processor = new Processor();
         $configuration = new ServerConfiguration();
 
