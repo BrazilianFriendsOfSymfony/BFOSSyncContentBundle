@@ -19,6 +19,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use \BFOS\SyncContentBundle\Server\Server;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DeployCommand extends ContainerAwareCommand
 {
@@ -114,7 +115,7 @@ EOF
 //            $cmd = "rsync -e 'ssh -p $port' -azC --no-o --no-t --no-p --force --delete --progress " ;
             $cmd = "rsync -e 'ssh -p $port' -azCcI --no-t --force --delete --progress " ;
             if(isset($options["deployment"]['rsync_exclude'])){
-                $cmd .= " --exclude-from=".$options["deployment"]['rsync_exclude'] . " ";
+                $cmd .= " --exclude-from=". $this->replaceParameters($options["deployment"]['rsync_exclude'], $this->getContainer()) . " ";
             }
             $cmd .= escapeshellarg($from) . " " . escapeshellarg($to);
 
@@ -179,6 +180,16 @@ EOF
             throw new \Exception("Remote commands failed");
         }
         $output->writeln('Remote commands executed successfully.');
+    }
+
+    private function replaceParameters($value, ContainerInterface $container) {
+        preg_match_all("/%.*?%/", $value, $matches);
+        $matches = reset($matches);
+        foreach($matches as $param) {
+            $replace = $container->getParameter(str_replace("%","",$param));
+            $value = str_replace($param, $replace, $value);
+        }
+        return $value;
     }
 
 }
