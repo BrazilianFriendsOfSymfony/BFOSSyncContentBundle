@@ -45,7 +45,8 @@ And this to your app/config/config_dev.yml
     bfos_sync_content:
         options: # Global options
             deployment:
-                rsync_exclude: "%kernel.root_dir%/config/rsync_exclude.txt"
+                rsync_exclude: 
+                    - "%kernel.root_dir%/config/rsync_exclude.txt"
                 pre_local_commands:
                     - 'php app/console assetic:dump'
                 post_local_commands:
@@ -71,6 +72,9 @@ Example of deployment_sync_content.yml :
             dir: /home/user/mysite
             options : # Server options, override the globals
                 rsync_options: '-azC --force --delete --verbose --progress'
+                deployment:
+                    rsync_exclude: 
+                        - "%kernel.root_dir%/config/rsync_exclude.txt"
         production:
             host: www.mysite.com
             port: 22
@@ -78,6 +82,10 @@ Example of deployment_sync_content.yml :
             dir: /home/user/mysite
             options : # Server options, override the globals
                 rsync_options: '-azC --force --delete --verbose --progress'
+                deployment:
+                    rsync_exclude: 
+                        - "%kernel.root_dir%/config/rsync_exclude.txt"
+                        - "%kernel.root_dir%/config/rsync_exclude_prod.txt"
 
 Example of rsync_exclude.txt :
 

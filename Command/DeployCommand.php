@@ -115,7 +115,12 @@ EOF
 //            $cmd = "rsync -e 'ssh -p $port' -azC --no-o --no-t --no-p --force --delete --progress " ;
             $cmd = "rsync -e 'ssh -p $port' -azCcI --no-t --force --delete --progress " ;
             if(isset($options["deployment"]['rsync_exclude'])){
-                $cmd .= " --exclude-from=". $this->replaceParameters($options["deployment"]['rsync_exclude'], $this->getContainer()) . " ";
+                if (!is_array($options["deployment"]['rsync_exclude'])) {
+                    $options["deployment"]['rsync_exclude'] = array($options["deployment"]['rsync_exclude']);
+                }
+                foreach ($options["deployment"]['rsync_exclude']  as $rsync_exclude) {
+                    $cmd .= " --exclude-from=". $this->replaceParameters($rsync_exclude, $this->getContainer()) . " ";
+                }
             }
             $cmd .= escapeshellarg($from) . " " . escapeshellarg($to);
 

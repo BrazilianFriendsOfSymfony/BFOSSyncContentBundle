@@ -37,6 +37,9 @@ bfos_sync_content:
             dir: /home/user/mysite
             options : # Server options, override the globals
                 rsync_options: '-azC --force --delete --verbose --progress'
+                deployment:
+                    rsync_exclude: "%kernel.root_dir%/config/rsync_exclude.txt"
+
         production:
             host: www.mysite.com
             port: 22
@@ -44,4 +47,7 @@ bfos_sync_content:
             dir: /home/user/mysite
             options : # Server options, override the globals
                 rsync_options: '-azC --force --delete --verbose --progress'
+                deployment:
+                    rsync_exclude: "%kernel.root_dir%/config/rsync_exclude.txt"
+                    rsync_exclude: "%kernel.root_dir%/config/rsync_exclude_prod.txt"
 
