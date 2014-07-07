@@ -11,13 +11,11 @@
 
 namespace BFOS\SyncContentBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use BFOS\SyncContentBundle\Server\ServerRegisterInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-
-use \BFOS\SyncContentBundle\Server\Server;
 
 class SyncFromCommand extends AbstractSyncCommand
 {
@@ -29,7 +27,7 @@ class SyncFromCommand extends AbstractSyncCommand
             ->addArgument('remoteenv', InputArgument::REQUIRED, 'The environment name and server name concatenated by @ .')
             ->addOption('only-database', null, InputOption::VALUE_OPTIONAL, 'Indicates that only the database content should be synchronized.', false)
             ->setHelp(<<<EOF
-The <info>bosf:sync-content:from</info> command synchronize the content from a remote server to your computer:
+The <info>bfos:sync-content:from</info> command synchronize the content from a remote server to your computer:
 
   <info>php app/console bfos:sync-content:from prod@production</info>
 
@@ -62,7 +60,7 @@ EOF
         $localEnv = $input->getOption('env');
 
         /**
-         * @var \BFOS\SyncContentBundle\Server\ServerRegisterInterface $register
+         * @var ServerRegisterInterface $register
          */
         $register = $this->getContainer()->get('bfos_sync_content.server_register');
 

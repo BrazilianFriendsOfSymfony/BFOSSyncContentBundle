@@ -11,13 +11,11 @@
 
 namespace BFOS\SyncContentBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use BFOS\SyncContentBundle\Server\ServerRegisterInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-
-use \BFOS\SyncContentBundle\Server\Server;
 
 class SyncToCommand extends AbstractSyncCommand
 {
@@ -63,7 +61,7 @@ EOF
         $localEnv = $input->getOption('env');
 
         /**
-         * @var \BFOS\SyncContentBundle\Server\ServerRegisterInterface $register
+         * @var ServerRegisterInterface $register
          */
         $register = $this->getContainer()->get('bfos_sync_content.server_register');
 
