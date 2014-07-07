@@ -151,6 +151,10 @@ class ServerRegister implements ServerRegisterInterface
     {
         $global = $this->getGlobalOptions();
         $local = $server->getOptions();
+        if (isset($local['deployment']) && isset($global['deployment'])) {
+            $local['deployment'] = array_merge($global['deployment'], $local['deployment']);
+        }
+
         return array_merge($global, $local);
     }
 }
