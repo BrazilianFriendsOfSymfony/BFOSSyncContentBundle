@@ -29,7 +29,7 @@ class ServerLoader implements LoaderInterface
         }
 
         if (is_string($filename)) {
-            $configs = Yaml::parse($filename);
+            $configs = Yaml::parse(file_get_contents($filename));
         } elseif (is_array($filename)) {
             $configs = $filename;
         } else {
